@@ -170,3 +170,14 @@ body {
     overflow-wrap: normal;
     text-overflow: ellipsis;
 }
+
+@media only screen and (max-width: 600px) {
+    .sidebar {
+        display: none;
+    }
+
+    .reader {
+        left: 0rem;
+        width: 100%;
+    }
+}
