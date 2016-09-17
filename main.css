@@ -73,15 +73,24 @@ body {
     bottom: 0;
     left: 15rem;
     background: #FFF;
+    padding: 30px;
 }
 
-.text {
-    padding: 30px;
+.reader .title {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.reader .chapters-list {
+    margin-bottom: 40px;
+}
+
+.reader .text {
     text-align: justify;
     white-space: pre-wrap;
 }
 
-.text p {
+.reader .text p {
     text-indent: 3%;
 }
 
@@ -106,33 +115,37 @@ body {
     cursor: default;
     background: rgba(0,0,0,.1);
     box-shadow: inset -1px 0 #e3e3e3;
+    color: #333;
 }
 
-.sidebar-list--arrow {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-left: 10px solid rgba(0,0,0,.8);
-    border-bottom: 5px solid transparent;
-}
-
-.sidebar-list--arrow.active {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 10px solid rgba(0,0,0,.8);
+.sidebar-list--item.active {
+    background: #a5a5a5;
+    box-shadow: inset -1px 0 #a5a5a5;
+    color: #FFF;
 }
 
 .sidebar-list--text {
     display: block;
     pointer-events: none;
-    color: #333;
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 5px;
 }
+
 .sidebar-list--item, .sidebar-list--text {
+    overflow: hidden;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow-wrap: normal;
+    text-overflow: ellipsis;
+}
+
+.chapters {
+    margin-left: 30px;
+}
+
+.chapters > .chapter {
+    font-size: 14px;
+    padding: 5px 0;
     overflow: hidden;
     white-space: nowrap;
     word-wrap: normal;
