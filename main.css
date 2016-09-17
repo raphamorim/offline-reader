@@ -77,15 +77,47 @@ body {
 }
 
 .reader .title {
-    font-size: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.reader .navigation {
+    float: left;
+}
+
+.reader .navigation .btn {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    padding: 6px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.reader .description {
     margin-bottom: 20px;
+    color: #999;
+    border-bottom: 1px dotted #999;
+    padding-bottom: 15px;
 }
 
 .reader .chapters-list {
-    margin-bottom: 40px;
+    float: left;
+}
+
+.reader .chapters {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
 }
 
 .reader .text {
+    clear: both;
+    margin-top: 90px;
     text-align: justify;
     white-space: pre-wrap;
 }
@@ -132,20 +164,6 @@ body {
 }
 
 .sidebar-list--item, .sidebar-list--text {
-    overflow: hidden;
-    white-space: nowrap;
-    word-wrap: normal;
-    overflow-wrap: normal;
-    text-overflow: ellipsis;
-}
-
-.chapters {
-    margin-left: 30px;
-}
-
-.chapters > .chapter {
-    font-size: 14px;
-    padding: 5px 0;
     overflow: hidden;
     white-space: nowrap;
     word-wrap: normal;
