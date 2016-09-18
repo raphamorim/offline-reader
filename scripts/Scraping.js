@@ -3,7 +3,8 @@
 /*eslint prefer-const: "error"*/
 /*eslint-env es6*/
 
-// const inputTB = document.querySelector("#testInput");
+const btnScrape = document.querySelector("#btn-scrape");
+const inputScrape = document.querySelector("#input-scrape");
 // const indexedDbShowButton = document.querySelector("#indexedDbShow");
 const resultsAnchor = document.querySelector('#resultsAnchor');
 const nextChapterLink = document.querySelector('.next');
@@ -11,8 +12,11 @@ const previousChapterLink = document.querySelector('.prev');
 
 let Story = {};
 
+btnScrape.addEventListener('click', StartScrap);
+
 nextChapterLink.addEventListener('click', function() {
     Story.currentChapter += 1;
+
     getNextChapter();
     if (Story.currentChapter > 1) {
         previousChapterLink.classList.remove('disable');
@@ -28,10 +32,8 @@ previousChapterLink.addEventListener('click', function() {
     }
 });
 
-document.addEventListener("DOMContentLoaded", Start);
-
-function Start(e) {
-    const parsedInput = parseUserInput('https://www.fictionpress.com/s/2961893/1/Mother-of-Learning', supportedSites);
+function StartScrap(e) {
+    const parsedInput = parseUserInput(inputScrape.value, supportedSites);
     const yqlStringLinks = yqlStringBuilder(parsedInput.href, parsedInput.xpathLinks);
     const yqlStringChapters = new Set();
     var title = document.querySelector('#title');
@@ -50,17 +52,19 @@ function Start(e) {
         Story.id = parsedInput.storyId;
         Story.href = parsedInput.href;
 
-        populateChapters(numberOfChapters);
-        getNextChapter();
+        populateChaptersSelectOptions();
+        populateChapters(function() {
+            getNextChapter();
+        });
 
     }).catch(function(err) {
         console.log('Request failed', err);
     })
 }
 
-function populateChapters(chaptersTotal) {
+function populateChaptersSelectOptions() {
     var chaptersSelect = document.querySelector('#chapters-select');
-    for (var i = 1; i <= chaptersTotal; i++)
+    for (var i = 1; i <= Story.chapters; i++)
     {
        var opt = document.createElement("option");
        opt.value = i;
@@ -70,15 +74,33 @@ function populateChapters(chaptersTotal) {
     }
 }
 
+function populateChapters(fn) {
+    const url = Story.parsedInput.hrefEmptyChapter + Story.currentChapter,
+        xpath = Story.parsedInput.xpathStory;
+
+    const nextStoryPath = Story.id + "." + Story.currentChapter;
+    for (var i = 1; i <= Story.chapters; i++) {
+        console.log(i);
+        makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
+            .then(function(data) {
+                addOrReplaceStory(nextStoryPath, Story.name, Story.href,
+                    data, Story.chapters);
+        })
+        .catch(function(err) {
+            console.log('Request failed', err);
+        })
+    }
+    fn();
+}
+
 function getNextChapter() {
+    console.log(1);
     const url = Story.parsedInput.hrefEmptyChapter + Story.currentChapter,
         xpath = Story.parsedInput.xpathStory;
 
     const nextStoryPath = Story.id + "." + Story.currentChapter;
     makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
         .then(function(data) {
-            addOrReplaceStory(nextStoryPath, Story.name, Story.href,
-                data, Story.chapters);
             getChapter(nextStoryPath);
         })
         .catch(function(err) {
@@ -122,7 +144,7 @@ function parseUserInput(url, supSites) {
     }
     const input = parseUrl(url);
     if (!supSites.has(input.hostname)) {
-        console.log(`I'm sorry, '${inputTB.value}' not found in our supported sites list`);
+        console.log(`I'm sorry, '${input.value}' not found in our supported sites list`);
         return;
     }
     input.xpathLinks = supSites.get(input.hostname).xpathLinks;

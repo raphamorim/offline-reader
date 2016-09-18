@@ -53,7 +53,7 @@ body {
     position: fixed;
     z-index: 2;
     top: 0rem;
-    width: 15em;
+    width: 20em;
     bottom: 0;
     left: 0;
     margin-top: 1px;
@@ -71,7 +71,7 @@ body {
     top: 0rem;
     width: 65%;
     bottom: 0;
-    left: 15rem;
+    left: 20rem;
     background: #FFF;
     padding: 30px;
 }
@@ -140,7 +140,7 @@ body {
 .sidebar-list {
     min-height: 100%;
     padding-bottom: 3.5rem;
-    padding-top: 5rem;
+    padding-top: 1rem;
 }
 
 .sidebar-list--item, ..sidebar-list--item:hover {
@@ -191,4 +191,27 @@ body {
         left: 0rem;
         width: 100%;
     }
+}
+
+.sidebar-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.sidebar-input #input-scrape {
+    margin-top: 30px;
+    padding: 10px;
+    width: 300px;
+    border: 2px solid #eee;
+}
+
+#btn-scrape {
+    margin-top: 10px;
+    background: #FFF;
+    color: #000;
+    padding: 5px 20px;
+    border: 2px solid #a5a5a5;
 }
