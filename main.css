@@ -69,7 +69,7 @@ body {
     position: absolute;
     z-index: 2;
     top: 0rem;
-    width: 70%;
+    width: 65%;
     bottom: 0;
     left: 15rem;
     background: #FFF;
@@ -93,7 +93,13 @@ body {
     border: 1px solid #ccc;
     padding: 6px 15px;
     border-radius: 5px;
-    margin-left: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.reader .navigation .btn.disable {
+    cursor: default;
+    color: #ccc;
 }
 
 .reader .description {
@@ -105,6 +111,7 @@ body {
 
 .reader .chapters-list {
     float: left;
+    margin-right: 10px;
 }
 
 .reader .chapters {
@@ -112,14 +119,18 @@ body {
     border: 1px solid #ccc;
     height: 30px;
     line-height: 30px;
+    width: 140px;
     display: inline-block;
 }
 
 .reader .text {
     clear: both;
-    margin-top: 90px;
     text-align: justify;
     white-space: pre-wrap;
+}
+
+.reader .text .chapterBox {
+    margin-top: -55px;
 }
 
 .reader .text p {
