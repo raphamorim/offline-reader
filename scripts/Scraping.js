@@ -16,21 +16,31 @@ btnScrape.addEventListener('click', StartScrap);
 
 nextChapterLink.addEventListener('click', function() {
     Story.currentChapter += 1;
-
     getNextChapter();
-    if (Story.currentChapter > 1) {
-        previousChapterLink.classList.remove('disable');
-    }
+    updateNav();
 });
 
 previousChapterLink.addEventListener('click', function() {
     if (Story.currentChapter > 1) {
         Story.currentChapter -= 1;
-        if (Story.currentChapter === 1)
-            previousChapterLink.classList.add('disable');
         getNextChapter();
+        updateNav();
     }
 });
+
+function updateNav() {
+    if (Story.currentChapter > 1) {
+        previousChapterLink.classList.remove('disable');
+
+        if (Story.currentChapter == Story.chapters) {
+            nextChapterLink.classList.add('disable');
+        } else {
+            nextChapterLink.classList.remove('disable');
+        }
+    } else if (Story.currentChapter == 1) {
+        previousChapterLink.classList.add('disable');
+    }
+}
 
 function StartScrap(e) {
     const parsedInput = parseUserInput(inputScrape.value, supportedSites);
@@ -64,14 +74,17 @@ function StartScrap(e) {
 
 function populateChaptersSelectOptions() {
     var chaptersSelect = document.querySelector('#chapters-select');
-    for (var i = 1; i <= Story.chapters; i++)
-    {
-       var opt = document.createElement("option");
-       opt.value = i;
-       opt.innerHTML = "Chapter: " + i;
+    for (var i = 1; i <= Story.chapters; i++) {
+        var opt = document.createElement("option");
+        opt.value = i;
+        opt.innerHTML = "Chapter: " + i;
 
-       chaptersSelect.appendChild(opt);
+        chaptersSelect.appendChild(opt);
     }
+
+    chaptersSelect.addEventListener('change', function() {
+        goToChapter(this.value);
+    })
 }
 
 function populateChapters(fn) {
@@ -84,16 +97,21 @@ function populateChapters(fn) {
             .then(function(data) {
                 addOrReplaceStory(nextStoryPath, Story.name, Story.href,
                     data, Story.chapters);
-        })
-        .catch(function(err) {
-            console.log('Request failed', err);
-        })
+            })
+            .catch(function(err) {
+                console.log('Request failed', err);
+            })
     }
     fn();
 }
 
+function goToChapter(chapter) {
+    Story.currentChapter = chapter;
+    getNextChapter();
+    updateNav();
+}
+
 function getNextChapter() {
-    console.log(1);
     const url = Story.parsedInput.hrefEmptyChapter + Story.currentChapter,
         xpath = Story.parsedInput.xpathStory;
 
@@ -101,7 +119,7 @@ function getNextChapter() {
     makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
         .then(function(data) {
             addOrReplaceStory(nextStoryPath, Story.name, Story.href,
-                    data, Story.chapters);
+                data, Story.chapters);
             getChapter(nextStoryPath);
         })
         .catch(function(err) {
