@@ -65,8 +65,9 @@ function StartScrap(e) {
         Story.href = parsedInput.href;
 
         populateChaptersSelectOptions();
-        populateChapters();
-        getCurrentChapter();
+        populateChapters(function() {
+            getCurrentChapter();
+        });
 
     }).catch(function(err) {
         console.log('Request failed', err);
@@ -88,17 +89,22 @@ function populateChaptersSelectOptions() {
     })
 }
 
-function populateChapters() {
+function populateChapters(fn) {
+    console.log(Story)
     const url = Story.parsedInput.hrefEmptyChapter + Story.currentChapter,
         xpath = Story.parsedInput.xpathStory;
 
     const nextStoryPath = Story.id + "." + Story.currentChapter;
     for (var i = 1; i <= Story.chapters; i++) {
+        console.log(i);
         makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
             .then(function(data) {
                 addOrReplaceStory(nextStoryPath, Story.name, Story.href,
                     data, Story.chapters);
-                getChapter(nextStoryPath);
+                // getChapter(nextStoryPath);
+            })
+            .then(function() {
+                fn();
             })
             .catch(function(err) {
                 console.log('Request failed', err);
