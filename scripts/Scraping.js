@@ -94,9 +94,8 @@ function populateChapters(fn) {
     const url = Story.parsedInput.hrefEmptyChapter + Story.currentChapter,
         xpath = Story.parsedInput.xpathStory;
 
-    const nextStoryPath = Story.id + "." + Story.currentChapter;
     for (var i = 1; i <= Story.chapters; i++) {
-        console.log(i);
+        const nextStoryPath = Story.id + "." + i;
         makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
             .then(function(data) {
                 addOrReplaceStory(nextStoryPath, Story.name, Story.href,
