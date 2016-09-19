@@ -109,8 +109,8 @@ function populateChapters(fn) {
 
 function goToChapter(chapter) {
     Story.currentChapter = chapter;
-    getCurrentChapter();
     updateNav();
+    getCurrentChapter();
 }
 
 function getCurrentChapter() {
