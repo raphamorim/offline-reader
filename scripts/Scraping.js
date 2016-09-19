@@ -14,18 +14,20 @@ let Story = {};
 
 btnScrape.addEventListener('click', StartScrap);
 
-nextChapterLink.addEventListener('click', function() {
+nextChapterLink.addEventListener('click', function(e) {
     Story.currentChapter += 1;
-    getNextChapter();
+    getCurrentChapter();
     updateNav();
+    e.preventDefault();
 });
 
-previousChapterLink.addEventListener('click', function() {
+previousChapterLink.addEventListener('click', function(e) {
     if (Story.currentChapter > 1) {
         Story.currentChapter -= 1;
-        getNextChapter();
+        getCurrentChapter();
         updateNav();
     }
+    e.preventDefault();
 });
 
 function updateNav() {
@@ -63,9 +65,8 @@ function StartScrap(e) {
         Story.href = parsedInput.href;
 
         populateChaptersSelectOptions();
-        populateChapters(function() {
-            getNextChapter();
-        });
+        populateChapters();
+        getCurrentChapter();
 
     }).catch(function(err) {
         console.log('Request failed', err);
@@ -87,7 +88,7 @@ function populateChaptersSelectOptions() {
     })
 }
 
-function populateChapters(fn) {
+function populateChapters() {
     const url = Story.parsedInput.hrefEmptyChapter + Story.currentChapter,
         xpath = Story.parsedInput.xpathStory;
 
@@ -97,34 +98,23 @@ function populateChapters(fn) {
             .then(function(data) {
                 addOrReplaceStory(nextStoryPath, Story.name, Story.href,
                     data, Story.chapters);
+                getChapter(nextStoryPath);
             })
             .catch(function(err) {
                 console.log('Request failed', err);
             })
     }
-    fn();
 }
 
 function goToChapter(chapter) {
     Story.currentChapter = chapter;
-    getNextChapter();
+    getCurrentChapter();
     updateNav();
 }
 
-function getNextChapter() {
-    const url = Story.parsedInput.hrefEmptyChapter + Story.currentChapter,
-        xpath = Story.parsedInput.xpathStory;
-
+function getCurrentChapter() {
     const nextStoryPath = Story.id + "." + Story.currentChapter;
-    makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
-        .then(function(data) {
-            addOrReplaceStory(nextStoryPath, Story.name, Story.href,
-                data, Story.chapters);
-            getChapter(nextStoryPath);
-        })
-        .catch(function(err) {
-            console.log('Request failed', err);
-        })
+    getChapter(nextStoryPath);
 }
 
 // indexedDbShowButton.addEventListener("click", function(){
