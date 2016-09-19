@@ -80,7 +80,6 @@ function populateChapters(fn) {
 
     const nextStoryPath = Story.id + "." + Story.currentChapter;
     for (var i = 1; i <= Story.chapters; i++) {
-        console.log(i);
         makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
             .then(function(data) {
                 addOrReplaceStory(nextStoryPath, Story.name, Story.href,
@@ -101,6 +100,8 @@ function getNextChapter() {
     const nextStoryPath = Story.id + "." + Story.currentChapter;
     makeRequest('GET', yqlStringBuilder(url, xpath, 'xml'))
         .then(function(data) {
+            addOrReplaceStory(nextStoryPath, Story.name, Story.href,
+                    data, Story.chapters);
             getChapter(nextStoryPath);
         })
         .catch(function(err) {
