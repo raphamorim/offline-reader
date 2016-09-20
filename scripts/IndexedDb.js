@@ -68,6 +68,7 @@
     request.onsuccess = function(event) {
       if(request.result){
         const value = event.target.result;
+        console.log(value.Content.slice(0, 300));
           //TODO: Raphael, a logica de cada capítulo deve entrar aqui, essa é a estrutura básica
           //pode transformar em callback, como em populateStoryArray
           storyList.innerHTML = `<div class="chapterBox">${value.Content}</div>`;

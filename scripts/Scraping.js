@@ -87,8 +87,7 @@ function populateChaptersSelectOptions() {
     })
 }
 
-function populateChapters(fn) {
-    console.log(Story)
+function populateChapters() {
     for (var i = 1; i <= Story.chapters; i++) {
         const url = Story.parsedInput.hrefEmptyChapter + i,
             xpath = Story.parsedInput.xpathStory;
