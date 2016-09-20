@@ -12,7 +12,7 @@
   // Used to keep track of which view is displayed to avoid uselessly reloading it
   let current_view_pub_key;
 
-  function openDb() {
+  function openDb(fn) {
     console.log("openDb ...");
     const req = indexedDB.open(DB_NAME, DB_VERSION);
     req.onsuccess = function (evt) {
@@ -21,6 +21,7 @@
       // db = req.result;
       db = this.result;
       console.log("openDb DONE");
+      fn();
     };
     req.onerror = function (evt) {
       console.error("openDb:", evt.target.errorCode);
@@ -359,6 +360,3 @@
     // });
 
   // }
-
-  openDb();
-  //addEventListeners();

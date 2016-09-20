@@ -57,7 +57,7 @@ body {
     bottom: 0;
     left: 0;
     margin-top: 1px;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     overflow-y: scroll;
     background: #f9f9f9;
     -webkit-overflow-scrolling: touch;
@@ -175,11 +175,12 @@ body {
 }
 
 .sidebar-list--item, .sidebar-list--text {
-    overflow: hidden;
+    /*overflow: hidden;*/
     white-space: nowrap;
     word-wrap: normal;
     overflow-wrap: normal;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
@@ -213,5 +214,6 @@ body {
     background: #FFF;
     color: #000;
     padding: 5px 20px;
+    cursor: pointer;
     border: 2px solid #a5a5a5;
 }
