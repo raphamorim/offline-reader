@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 btnScrape.addEventListener('click', StartScrap);
 
 nextChapterLink.addEventListener('click', function(e) {
+    if (this.classList.contains('disable'))
+        return;
+
     Story.currentChapter += 1;
     getCurrentChapter();
     updateNav();
@@ -30,6 +33,9 @@ nextChapterLink.addEventListener('click', function(e) {
 });
 
 previousChapterLink.addEventListener('click', function(e) {
+    if (this.classList.contains('disable'))
+        return;
+
     if (Story.currentChapter > 1) {
         Story.currentChapter -= 1;
         getCurrentChapter();
@@ -49,6 +55,9 @@ function updateNav() {
         }
     } else if (Story.currentChapter == 1) {
         previousChapterLink.classList.add('disable');
+        if (Story.chapters > 1) {
+            nextChapterLink.classList.remove('disable');
+        }
     }
 }
 
