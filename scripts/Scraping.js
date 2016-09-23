@@ -45,6 +45,8 @@ previousChapterLink.addEventListener('click', function(e) {
 });
 
 function updateNav() {
+    var chaptersSelect = document.querySelector('#chapters-select');
+    chaptersSelect.selectedIndex = Story.currentChapter - 1;
     if (Story.currentChapter > 1) {
         previousChapterLink.classList.remove('disable');
 
@@ -127,7 +129,6 @@ function updateStoryList() {
     populateStoryArray(function(data){
         const strList = document.querySelector(".sidebar-list");
         strList.innerHTML = '';
-        console.log(data);
         data.forEach(function(obj, i) {
           strList.insertAdjacentHTML('beforeend', `
             <a href="#" class="sidebar-list--item story-sel" data-story="${i}" title="${obj.StoryName}">
