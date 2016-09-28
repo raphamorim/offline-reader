@@ -11,6 +11,16 @@ const nextChapterLink = document.querySelector('.next');
 const previousChapterLink = document.querySelector('.prev');
 
 let chaptersTotal = document.querySelector('#chapters-total');
+let mobileNav = document.querySelector('#mobile-nav');
+
+mobileNav.addEventListener('click', function(e) {
+    let sidebar = document.querySelector('.sidebar');
+    let navToggle = document.querySelector('.nav-toggle');
+
+    navToggle.classList.toggle("active");
+    var style = window.getComputedStyle(sidebar);
+    sidebar.style.display = style.display === 'none' ? 'block' : 'none';
+})
 
 let Story = {};
 

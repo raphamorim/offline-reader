@@ -183,17 +183,6 @@ body {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 600px) {
-    .sidebar {
-        display: none;
-    }
-
-    .reader {
-        left: 0rem;
-        width: 100%;
-    }
-}
-
 .sidebar-input {
     display: flex;
     align-items: center;
@@ -216,4 +205,86 @@ body {
     padding: 5px 20px;
     cursor: pointer;
     border: 2px solid #a5a5a5;
+}
+
+.mobile-nav {
+    visibility: hidden;
+}
+
+/* Nav Toogle */
+.nav-toggle {
+  padding: 5px 20px 13px 0px;
+}
+.nav-toggle>span, .nav-toggle span:before, .nav-toggle span:after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 5px;
+  width: 30px;
+  background: #666;
+  position: absolute;
+  display: block;
+  content: '';
+}
+.nav-toggle span:before {
+  top: -10px;
+}
+.nav-toggle span:after {
+  bottom: -10px;
+}
+.nav-toggle span, .nav-toggle span:before, .nav-toggle span:after {
+  transition: all 500ms ease-in-out;
+}
+.nav-toggle.active span {
+  background-color: transparent;
+}
+.nav-toggle.active span:before, .nav-toggle.active span:after {
+  top: 0;
+}
+.nav-toggle.active span:before {
+  transform: rotate(45deg);
+}
+.nav-toggle.active span:after {
+  transform: rotate(-45deg);
+}
+/* End of Nav-Toggle */
+
+@media only screen and (max-width: 600px) {
+    .sidebar {
+        position: absolute;
+        display: none;
+        top: 0;
+        z-index: 3;
+        width: 100%;
+    }
+
+    .sidebar-input {
+        padding: 4px;
+    }
+
+    .sidebar-input #input-scrape {
+        margin-top: 15px;
+        padding: 5px;
+        width: 250px;
+    }
+
+    #btn-scrape {
+        margin-top: 5px;
+        padding: 3px 15px;
+    }
+
+    .reader {
+        left: 0rem;
+        width: 100%;
+    }
+
+    #mobile-nav {
+        position: absolute;
+        font-size: 18px;
+        font-weight: 500;
+        margin: 10px;
+        right: 10px;
+        top: 10px;
+        color: #555;
+        z-index: 99;
+    }
 }
