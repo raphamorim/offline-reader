@@ -7,10 +7,10 @@
   const DB_VERSION = 3; // Use a long long for this value (don't use a float)
   const DB_STORE_NAME = 'stories';
 
-  let db;
+  var db;
 
   // Used to keep track of which view is displayed to avoid uselessly reloading it
-  let current_view_pub_key;
+  var current_view_pub_key;
 
   function openDb(fn) {
     console.log("openDb ...");
@@ -146,7 +146,7 @@
     const storyList = document.querySelector('#storyList');
     storyList.innerHTML = '';
 
-    let req = store.count();
+    var req = store.count();
     // Requests are executed in the order in which they were made against the
     // transaction, and their results are returned in the same order.
     // Thus the count text below will be displayed before the actual pub list
@@ -160,7 +160,7 @@
       displayActionFailure(this.error);
     };
 
-    let i = 0;
+    var i = 0;
     req = store.openCursor();
     req.onsuccess = function(evt) {
       const cursor = evt.target.result;
@@ -205,7 +205,7 @@
       "NumberOfChapters": numberOfChapters};
 
     const store = getObjectStore(DB_STORE_NAME, 'readwrite');
-    let req;
+    var req;
     try {
       req = store.put(obj);
     } catch (e) {
