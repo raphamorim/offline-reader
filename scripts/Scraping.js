@@ -135,6 +135,14 @@ function populateChapters() {
     getCurrentChapter();
 }
 
+function closeMobileSidebar() {
+    var sidebar = document.querySelector('.sidebar');
+    var navToggle = document.querySelector('.nav-toggle');
+
+    navToggle.classList.remove("active");
+    sidebar.style.display = 'none';
+}
+
 function updateStoryList() {
     populateStoryArray(function(data){
         const strList = document.querySelector(".sidebar-list");
@@ -149,7 +157,6 @@ function updateStoryList() {
         const storySelector = document.querySelectorAll('.story-sel');
         for (var i = storySelector.length - 1; i >= 0; i--) {
             storySelector[i].addEventListener('click', function(e) {
-                console.log(this.dataset.story);
                 var s = this.dataset.story;
 
                 Story.name = data[s].StoryName;
@@ -158,6 +165,7 @@ function updateStoryList() {
                 chaptersTotal.textContent = Story.chapters;
                 title.textContent = Story.name;
                 Story.currentChapter = 1;
+                closeMobileSidebar();
                 getCurrentChapter();
                 updateNav();
                 populateChaptersSelectOptions();
@@ -233,7 +241,7 @@ function parseUserInput(url, supSites) {
 function yqlStringBuilder(parsedUrl, xpath, format) {
     if (!format)
         format = 'json';
-    
+
     if (!parsedUrl || !xpath) {
         console.log(`yqlStringBuilder input problem:
                       parsedUrl: ${parsedUrl}
