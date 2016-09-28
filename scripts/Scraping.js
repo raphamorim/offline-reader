@@ -230,7 +230,10 @@ function parseUserInput(url, supSites) {
     return input;
 }
 
-function yqlStringBuilder(parsedUrl, xpath, format = 'json') {
+function yqlStringBuilder(parsedUrl, xpath, format) {
+    if (!format)
+        format = 'json';
+    
     if (!parsedUrl || !xpath) {
         console.log(`yqlStringBuilder input problem:
                       parsedUrl: ${parsedUrl}
